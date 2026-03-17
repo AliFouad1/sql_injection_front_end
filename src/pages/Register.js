@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Shield, AlertTriangle, CheckCircle, Eye, EyeOff } from 'lucide-react';
+import { AlertTriangle, CheckCircle, Eye, EyeOff } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { translations } from '../i18n/translations';
 import api from '../services/api';
