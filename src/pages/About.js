@@ -425,16 +425,15 @@ const UI = {
     wafCatches:     "WAF pattern that catches this",
     testPayload:    "Test payload (try in login)",
     all:            "All",
-    overview:       "This graduation project demonstrates a complete Web Application Firewall (WAF) built from scratch using Django and React. The primary goal is to showcase SQL injection detection, blocking, and audit logging in a realistic web application context.",
-    overviewP2:     "The system uses a Django middleware layer to inspect every incoming HTTP request before it reaches any view. Suspicious payloads are matched against 15+ compiled regex patterns covering all major SQLi attack categories.",
+    overview:       "This graduation project demonstrates a complete Web Application Firewall (WAF) built from scratch. A WAF is a security layer that sits between the user and the server — its job is to inspect every request and block anything that looks like an attack before it can cause damage.",
+    overviewP2:     "The main threat this system protects against is SQL injection — a common attack where a hacker types special commands into a form field to manipulate the database. The WAF catches these attempts automatically, blocks them, and saves a log so admins can review what happened.",
     steps: [
-      { title: 'Request arrives',           desc: 'Browser or API client sends an HTTP request to any endpoint.' },
-      { title: 'WAF Middleware intercepts', desc: 'SQLInjectionFirewallMiddleware.process_request() is called before any view logic.' },
-      { title: 'Input extraction',          desc: 'All user-controlled input is collected: GET params, POST fields, JSON body values.' },
-      { title: 'Pattern matching',          desc: 'Each input value is tested against 15+ compiled SQLi regex patterns.' },
-      { title: 'Block or pass',             desc: 'Match found → log to AttackLog, return HTTP 403. No match → request continues normally.' },
-      { title: 'Django ORM handles data',   desc: 'All views use Django ORM (parameterized queries) — no raw SQL anywhere.' },
-      { title: 'Audit trail',               desc: 'Admin and authorized users can review every blocked attempt in the Attack Logs page.' },
+      { title: 'You send a request',    desc: 'You type something into a form and hit submit — the browser sends that data to the server.' },
+      { title: 'Firewall checks first', desc: 'Before anything else runs, the firewall reads your input and looks for suspicious patterns.' },
+      { title: 'Pattern matching',      desc: "Your input is compared against a list of known attack signatures — like OR 1=1, DROP TABLE, UNION SELECT, and more." },
+      { title: 'Block or allow',        desc: 'Attack detected → request is blocked and an error is returned. Clean input → request continues normally.' },
+      { title: 'Safe database queries', desc: 'All data going to the database is handled safely — user input is never mixed directly into a query.' },
+      { title: 'Attack saved to log',   desc: 'Every blocked attempt is saved with details (who, when, what payload) so admins can review it later.' },
     ],
     secFeatures: [
       '✅ Django ORM only — no raw SQL',
@@ -467,16 +466,15 @@ const UI = {
     wafCatches:     "النمط الذي يصطاده جدار الحماية",
     testPayload:    "حمولة الاختبار (جرّبها في تسجيل الدخول)",
     all:            "الكل",
-    overview:       "هذا المشروع التخرجي يُقدّم نموذجاً عملياً لجدار حماية تطبيقات ويب (WAF) مبني من الصفر باستخدام Django وReact. الهدف الرئيسي هو إثبات قدرة النظام على كشف هجمات حقن SQL وصدّها وتوثيقها في سياق تطبيق ويب واقعي.",
-    overviewP2:     "يعتمد النظام على طبقة وسيطة في Django تفحص كل طلب HTTP وارد قبل أن يصل إلى أي مسار. تُقابَل الحمولات المشبوهة بأكثر من 15 نمطاً مُجمَّعاً يغطي جميع فئات هجمات حقن SQL الرئيسية.",
+    overview:       "هذا المشروع التخرجي يُقدّم نموذجاً عملياً لجدار حماية تطبيقات ويب (WAF) مبني من الصفر. جدار الحماية هو طبقة أمان تجلس بين المستخدم والخادم — مهمتها فحص كل طلب وارد وصدّ أي شيء يبدو كهجوم قبل أن يتسبب في ضرر.",
+    overviewP2:     "التهديد الرئيسي الذي يحمي منه هذا النظام هو حقن SQL — هجوم شائع يكتب فيه المهاجم أوامر خاصة في خانة الإدخال للتلاعب بقاعدة البيانات. جدار الحماية يكتشف هذه المحاولات تلقائياً، يحجبها، ويحفظ سجلاً بها ليراجعه المدير.",
     steps: [
-      { title: 'وصول الطلب',               desc: 'المتصفح أو عميل API يرسل طلب HTTP إلى أي نقطة وصول.' },
-      { title: 'اعتراض الطبقة الوسيطة',    desc: 'تُستدعى SQLInjectionFirewallMiddleware.process_request() قبل أي منطق للمسار.' },
-      { title: 'استخراج المدخلات',          desc: 'تُجمع جميع مدخلات المستخدم: معاملات GET وحقول POST وقيم جسم JSON.' },
-      { title: 'مطابقة الأنماط',            desc: 'تُختبر كل قيمة مدخلة بأكثر من 15 نمطاً لاكتشاف حقن SQL.' },
-      { title: 'الحجب أو التمرير',          desc: 'تطابق موجود ← تسجيل في AttackLog وإعادة HTTP 403. لا تطابق ← الطلب يُكمل مساره.' },
-      { title: 'Django ORM يعالج البيانات', desc: 'جميع المسارات تستخدم Django ORM (استعلامات مُعلَّمة) — لا SQL خام في أي مكان.' },
-      { title: 'سجل التدقيق',               desc: 'المدير والمستخدمون المخوّلون يستطيعون مراجعة كل محاولة محجوبة في صفحة سجلات الهجمات.' },
+      { title: 'تُرسل الطلب',         desc: 'تكتب شيئاً في خانة إدخال وتضغط إرسال — المتصفح يرسل تلك البيانات إلى الخادم.' },
+      { title: 'جدار الحماية يفحص أولاً', desc: 'قبل أي شيء آخر، يقرأ جدار الحماية مدخلاتك ويبحث عن أنماط مشبوهة.' },
+      { title: 'مطابقة الأنماط',      desc: 'يُقارَن مدخلك بقائمة من بصمات الهجمات المعروفة — مثل OR 1=1 وDROP TABLE وUNION SELECT وغيرها.' },
+      { title: 'الحجب أو التمرير',    desc: 'هجوم مكتشف ← الطلب يُحجب وتُعاد رسالة خطأ. مدخل نظيف ← الطلب يُكمل مساره بشكل طبيعي.' },
+      { title: 'استعلامات آمنة',      desc: 'جميع البيانات المرسلة إلى قاعدة البيانات تُعالَج بأمان — مدخلات المستخدم لا تُدمج مباشرة في الاستعلام.' },
+      { title: 'حفظ الهجوم في السجل', desc: 'كل محاولة محجوبة تُحفظ بتفاصيلها (من، متى، ماذا أرسل) ليراجعها المدير لاحقاً.' },
     ],
     secFeatures: [
       '✅ Django ORM حصراً — لا SQL خام',
@@ -632,8 +630,7 @@ export default function About() {
         <h1><BookOpen size={22} style={{ color: 'var(--accent)' }} />{t.aboutTitle}</h1>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 24, marginBottom: 24 }}>
-        <div>
+      <div style={{ marginBottom: 24 }}>
           {/* نظرة عامة */}
           <div className="card about-section">
             <h2><BookOpen size={18} />{t.projectOverview}</h2>
@@ -644,13 +641,7 @@ export default function About() {
                   ? <>{ui.overview.split('جدار حماية تطبيقات ويب (WAF)')[0]}<strong style={{ color: 'var(--accent)' }}>جدار حماية تطبيقات ويب (WAF)</strong>{ui.overview.split('جدار حماية تطبيقات ويب (WAF)')[1]}</>
                   : ui.overview}
             </p>
-            <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8 }}>
-              {ui.overviewP2.includes('Django middleware')
-                ? <>{ui.overviewP2.split('Django middleware')[0]}<strong style={{ color: 'var(--accent)' }}>Django middleware</strong>{ui.overviewP2.split('Django middleware')[1]}</>
-                : ui.overviewP2.includes('طبقة وسيطة في Django')
-                  ? <>{ui.overviewP2.split('طبقة وسيطة في Django')[0]}<strong style={{ color: 'var(--accent)' }}>طبقة وسيطة في Django</strong>{ui.overviewP2.split('طبقة وسيطة في Django')[1]}</>
-                  : ui.overviewP2}
-            </p>
+            <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8 }}>{ui.overviewP2}</p>
           </div>
 
           {/* كيف يعمل */}
@@ -664,32 +655,6 @@ export default function About() {
               ))}
             </div>
           </div>
-        </div>
-
-        <div>
-          {/* التقنيات */}
-          <div className="card about-section">
-            <h2><Layers size={18} />{t.techStack}</h2>
-            {[
-              { label: lang === 'ar' ? 'الخلفية' : 'Backend',   items: ['Django 5', 'Django REST Framework', 'SimpleJWT', 'django-cors-headers', 'SQLite / PostgreSQL'] },
-              { label: lang === 'ar' ? 'الواجهة' : 'Frontend',  items: ['React 18', 'React Router v6', 'Axios', 'Recharts', 'Lucide Icons'] },
-              { label: lang === 'ar' ? 'الأمان'  : 'Security',  items: ['JWT Auth', 'PBKDF2 Hashing', 'CSRF Protection', 'Rate Limiting', 'WAF Middleware', 'RBAC'] },
-            ].map(g => (
-              <div key={g.label} style={{ marginBottom: 14 }}>
-                <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginBottom: 7, textTransform: 'uppercase', letterSpacing: 1 }}>{g.label}</div>
-                <div className="tech-chips">{g.items.map(i => <span key={i} className="tech-chip">{i}</span>)}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* مميزات الأمان */}
-          <div className="card about-section">
-            <h2><Code size={18} />{ui.secFeatTitle}</h2>
-            {ui.secFeatures.map(f => (
-              <div key={f} style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', padding: '5px 0', borderBottom: '1px solid rgba(26,58,92,0.4)' }}>{f}</div>
-            ))}
-          </div>
-        </div>
       </div>
 
       {/* ═══════════════════ مرجع الهجمات ═══════════════════ */}
