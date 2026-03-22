@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookOpen, Layers, Zap, Code, ChevronDown, ChevronUp, AlertTriangle, Search } from 'lucide-react';
+import { BookOpen, Zap, ChevronDown, ChevronUp, AlertTriangle, Search } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { translations } from '../i18n/translations';
 
